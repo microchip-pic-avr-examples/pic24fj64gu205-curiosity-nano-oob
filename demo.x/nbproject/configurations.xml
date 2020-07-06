@@ -5,9 +5,10 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>io_mapping.h</itemPath>
-      <itemPath>button.h</itemPath>
       <itemPath>leds.h</itemPath>
       <itemPath>timer_1ms.h</itemPath>
+      <itemPath>button_user.c</itemPath>
+      <itemPath>button_user.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -18,7 +19,6 @@
                    projectFiles="true">
       <itemPath>main.c</itemPath>
       <itemPath>system.c</itemPath>
-      <itemPath>button.c</itemPath>
       <itemPath>leds.c</itemPath>
       <itemPath>timer_1ms.c</itemPath>
     </logicalFolder>

@@ -13,11 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 *******************************************************************************/
-
-#include "button.h"
 #include "leds.h"
 
 #define LED_BLINK_ALIVE LED_D3
 #define LED_BUTTON_PRESSED LED_D4
 
-#define BUTTON_DEMO BUTTON_S3

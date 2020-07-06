@@ -21,7 +21,7 @@ limitations under the License.
 #include <string.h>
 
 #include "timer_1ms.h"
-#include "button.h"
+#include "button_user.h"
 #include "leds.h"
  
 #include "io_mapping.h"

@@ -18,12 +18,8 @@ limitations under the License.
 
 #include <stdbool.h>
 
-#include "button.h"
-
 /*** Button Definitions *********************************************/
-//      S1  is MCLR button
 #define PIN_STATE  PORTAbits.RA13
-
 #define PIN_DIRECTION  TRISAbits.TRISA13
 
 #define BUTTON_PRESSED      0
