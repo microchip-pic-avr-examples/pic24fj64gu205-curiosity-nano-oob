@@ -21,10 +21,11 @@ limitations under the License.
 #include <string.h>
 
 #include "timer_1ms.h"
-#include "button_user.h"
+#include "button.h"
 #include "leds.h"
  
-#include "io_mapping.h"
+#define LED_BLINK_ALIVE LED_D3
+#define LED_BUTTON_PRESSED LED_D4
 
 // *****************************************************************************
 // *****************************************************************************
@@ -70,7 +71,7 @@ int main ( void )
         
         /* To determine how the LED and Buttons are mapped to the actual board
          * features, please see io_mapping.h. */
-        if(button.isPressed() == true)
+        if(BUTTON_IsPressed() == true)
         {
             LED_On( LED_BUTTON_PRESSED );
         }

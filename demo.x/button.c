@@ -14,12 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *******************************************************************************/
 
+#include <xc.h>
+
 #include <stdbool.h>
 #include "button.h"
 
-#ifndef BUTTON_USER_H
-#define BUTTON_USER_H
+#define PIN_STATE  PORTAbits.RA13
+#define PIN_DIRECTION  TRISAbits.TRISA13
 
-extern const struct BUTTON button;
+#define BUTTON_PRESSED      0
+#define BUTTON_NOT_PRESSED  1
 
-#endif 
+#define PIN_INPUT           1
+#define PIN_OUTPUT          0
+
+/*********************************************************************
+ * Function: bool BUTTON_IsPressed( void );
+ *
+ * Overview: Returns the current state of the requested button
+ *
+ * PreCondition: button configured via BUTTON_SetConfiguration()
+ *
+ * Input: None.
+ *
+ * Output: true if pressed; false if not pressed.
+ *
+ ********************************************************************/
+bool BUTTON_IsPressed ( void )
+{
+    PIN_DIRECTION = PIN_INPUT;
+    return ( (PIN_STATE == BUTTON_PRESSED) ? true : false);
+}
