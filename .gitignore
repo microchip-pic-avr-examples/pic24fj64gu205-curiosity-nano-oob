@@ -1,0 +1,13 @@
+*.o
+*.d
+*.elf
+*.map
+**/private
+**/debug
+**/production
+**/build
+**/dist
+**/nbproject/*.mk
+**/nbproject/*.properties
+**/nbproject/*.bash
+
