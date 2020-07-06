@@ -5,10 +5,10 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="bsp" projectFiles="true">
-        <itemPath>bsp/buttons.h</itemPath>
         <itemPath>bsp/leds.h</itemPath>
         <itemPath>bsp/timer_1ms.h</itemPath>
         <itemPath>bsp/lcd.h</itemPath>
+        <itemPath>bsp/button.h</itemPath>
       </logicalFolder>
       <itemPath>io_mapping.h</itemPath>
     </logicalFolder>
@@ -20,7 +20,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="bsp" projectFiles="true">
-        <itemPath>bsp/buttons.c</itemPath>
         <itemPath>bsp/lcd.c</itemPath>
         <itemPath>bsp/leds.c</itemPath>
         <itemPath>bsp/lcd_printf.c</itemPath>
@@ -28,6 +27,7 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>system.c</itemPath>
+      <itemPath>bsp/button.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

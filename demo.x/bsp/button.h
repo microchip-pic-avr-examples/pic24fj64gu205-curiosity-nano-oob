@@ -14,10 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *******************************************************************************/
 
-#include "bsp/button.h"
-#include "bsp/leds.h"
+#include <stdbool.h>
 
-#define LED_BLINK_ALIVE LED_D3
-#define LED_BUTTON_PRESSED LED_D4
+#ifndef BUTTON_H
+#define BUTTON_H
 
-#define BUTTON_DEMO BUTTON_S3
+/*********************************************************************
+* Function: bool BUTTON_IsPressed(BUTTON button);
+*
+* Overview: Returns the current state of the requested button
+*
+* PreCondition: button configured via BUTTON_SetConfiguration()
+*
+* Input: None
+*
+* Output: true if pressed; false if not pressed.
+*
+********************************************************************/
+bool BUTTON_IsPressed(void);
+
+#endif 

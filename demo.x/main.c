@@ -22,7 +22,7 @@ limitations under the License.
 
 #include "bsp/lcd.h"
 #include "bsp/timer_1ms.h"
-#include "bsp/buttons.h"
+#include "bsp/button.h"
 #include "bsp/leds.h"
  
 #include "io_mapping.h"
@@ -53,8 +53,6 @@ int main ( void )
      * features, please see io_mapping.h. */
     LED_Enable ( LED_BLINK_ALIVE );
     LED_Enable ( LED_BUTTON_PRESSED );
-
-    BUTTON_Enable ( BUTTON_DEMO );
     
     /* Get a timer event once every 100ms for the blink alive. */
     TIMER_SetConfiguration ( TIMER_CONFIGURATION_1MS );
@@ -73,7 +71,7 @@ int main ( void )
         
         /* To determine how the LED and Buttons are mapped to the actual board
          * features, please see io_mapping.h. */
-        if(BUTTON_IsPressed( BUTTON_DEMO ) == true)
+        if(BUTTON_IsPressed() == true)
         {
             LED_On( LED_BUTTON_PRESSED );
         }
