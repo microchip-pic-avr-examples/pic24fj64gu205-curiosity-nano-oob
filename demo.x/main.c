@@ -22,11 +22,8 @@ limitations under the License.
 
 #include "timer_1ms.h"
 #include "button.h"
-#include "leds.h"
+#include "led.h"
  
-#define LED_BLINK_ALIVE LED_D3
-#define LED_BUTTON_PRESSED LED_D4
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: File Scope Variables and Functions
@@ -34,8 +31,6 @@ limitations under the License.
 // *****************************************************************************
 extern void SYS_Initialize ( void ) ;
 static void TimerEventHandler( void );
-
-static bool toggleBlinkAlive = false;
 
 #define MEMCMP_VALUES_IDENTICAL 0
 
@@ -49,40 +44,20 @@ int main ( void )
     /* Call the System Initialize routine*/
     SYS_Initialize ( );
     
-    /* To determine how the LED and Buttons are mapped to the actual board
-     * features, please see io_mapping.h. */
-    LED_Enable ( LED_BLINK_ALIVE );
-    LED_Enable ( LED_BUTTON_PRESSED );
+    LED_Enable ( );
     
     /* Get a timer event once every 100ms for the blink alive. */
     TIMER_SetConfiguration ( TIMER_CONFIGURATION_1MS );
-    TIMER_RequestTick( &TimerEventHandler, 100 );
-    
-    /* Clear the screen */
-    printf( "\f" );   
     
     while ( 1 )
     {
-        if(toggleBlinkAlive == true)
-        {
-            LED_Toggle( LED_BLINK_ALIVE );
-            toggleBlinkAlive = false;
-        }
-        
-        /* To determine how the LED and Buttons are mapped to the actual board
-         * features, please see io_mapping.h. */
         if(BUTTON_IsPressed() == true)
         {
-            LED_On( LED_BUTTON_PRESSED );
+            LED_On( );
         }
         else
         {
-            LED_Off( LED_BUTTON_PRESSED );
+            LED_Off( );
         }
     }
-}
-
-static void TimerEventHandler(void)
-{    
-    toggleBlinkAlive = true;
 }
