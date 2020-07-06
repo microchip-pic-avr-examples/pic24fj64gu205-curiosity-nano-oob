@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *******************************************************************************/
 
-#include "bsp/button.h"
-#include "bsp/leds.h"
+#include "button.h"
+#include "leds.h"
 
 #define LED_BLINK_ALIVE LED_D3
 #define LED_BUTTON_PRESSED LED_D4

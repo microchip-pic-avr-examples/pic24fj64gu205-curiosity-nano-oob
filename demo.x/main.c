@@ -20,10 +20,9 @@ limitations under the License.
 #include <stdbool.h>
 #include <string.h>
 
-#include "bsp/lcd.h"
-#include "bsp/timer_1ms.h"
-#include "bsp/button.h"
-#include "bsp/leds.h"
+#include "timer_1ms.h"
+#include "button.h"
+#include "leds.h"
  
 #include "io_mapping.h"
 

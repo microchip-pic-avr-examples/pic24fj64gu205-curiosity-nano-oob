@@ -44,9 +44,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include <xc.h>
 
-#include "bsp/lcd.h"
-
-
 // FSEC
 #pragma config BWRP = OFF               // Boot Segment Write-Protect bit (Boot Segment may be written)
 #pragma config BSS = DISABLED           // Boot Segment Code-Protect Level bits (No Protection (other than BWRP))
@@ -180,7 +177,6 @@ void __attribute__ ( ( __interrupt__ , auto_psv ) ) _AltMathError ( void ) ;
 
 void SYS_Initialize ( void )
 {
-    LCD_Initialize();
 }
 
 
