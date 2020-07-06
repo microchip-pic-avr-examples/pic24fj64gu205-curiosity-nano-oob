@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *******************************************************************************/
 
+#ifndef BUTTON_H
+#define BUTTON_H
+
 #include <stdbool.h>
-#include "button.h"
 
-#ifndef BUTTON_USER_H
-#define BUTTON_USER_H
+struct BUTTON{
+    bool (* const isPressed)(void);
+};
 
-extern const struct BUTTON button;
-
-#endif 
+#endif

@@ -17,8 +17,8 @@ limitations under the License.
 #include <xc.h>
 
 #include <stdbool.h>
+#include "button.h"
 
-/*** Button Definitions *********************************************/
 #define PIN_STATE  PORTAbits.RA13
 #define PIN_DIRECTION  TRISAbits.TRISA13
 
@@ -45,3 +45,8 @@ bool BUTTON_IsPressed ( void )
     PIN_DIRECTION = PIN_INPUT;
     return ( (PIN_STATE == BUTTON_PRESSED) ? true : false);
 }
+
+/*** Button Definition **********************************************/
+struct BUTTON button = {
+    &BUTTON_IsPressed
+};

@@ -70,7 +70,7 @@ int main ( void )
         
         /* To determine how the LED and Buttons are mapped to the actual board
          * features, please see io_mapping.h. */
-        if(BUTTON_IsPressed() == true)
+        if(button.isPressed() == true)
         {
             LED_On( LED_BUTTON_PRESSED );
         }
