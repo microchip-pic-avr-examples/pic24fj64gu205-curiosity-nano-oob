@@ -45,8 +45,12 @@
 #include "mcc_generated_files/system.h"
 #include "button.h"
 #include "led.h"
+#include "console.h"
+#include "mcc_generated_files/usb/usb_device.h"
 
 extern void MCC_USB_CDC_DemoTasks(void);
+
+static bool buttonPressedAlready = false;
 
 int main(void)
 {
@@ -54,16 +58,27 @@ int main(void)
 
     while (1)
     {
-        if(BUTTON_IsPressed() == true)
+        if(USBGetDeviceState() == CONFIGURED_STATE)
         {
-            LED_On();
+            if(BUTTON_IsPressed() == true)
+            {
+                if(buttonPressedAlready == false)
+                {
+                    buttonPressedAlready = true;
+                    CONSOLE_Print("Hello World");
+                }
+                
+                CONSOLE_Print("Button Pressed");
+            }
+
+            CONSOLE_Tasks();
+            MCC_USB_CDC_DemoTasks();
         }
         else
         {
-            LED_Off();
+            buttonPressedAlready = false;
+            CONSOLE_Initialize();
         }
-        
-        MCC_USB_CDC_DemoTasks();
     }
 
     return 1;

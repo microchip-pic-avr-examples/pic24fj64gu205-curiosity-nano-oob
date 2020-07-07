@@ -25,6 +25,10 @@
         <itemPath>mcc_generated_files/traps.h</itemPath>
         <itemPath>mcc_generated_files/system.h</itemPath>
       </logicalFolder>
+      <itemPath>console.h</itemPath>
+      <itemPath>button.h</itemPath>
+      <itemPath>led.h</itemPath>
+      <itemPath>timer_1ms.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -55,6 +59,7 @@
       <itemPath>button.c</itemPath>
       <itemPath>led.c</itemPath>
       <itemPath>timer_1ms.c</itemPath>
+      <itemPath>console.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -234,6 +239,11 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
+      <ICD4Tool>
+        <property key="memories.programmemory.ranges" value="0-aeff"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/work/repos/oobe_curiosity_boards/oob_pic24fj64gu205_curiosity_nano/demo.X/debug/default/demo_ptg"/>
+      </ICD4Tool>
     </conf>
   </confs>
 </configurationDescriptor>
