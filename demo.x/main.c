@@ -14,7 +14,7 @@
     This source file provides main entry point for system initialization and application code development.
     Generation Information :
         Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.167.0
-        Device            :  PIC24FJ256GB110
+        Device            :  PIC24FJ64GU205
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.50
         MPLAB 	          :  MPLAB X v5.35
@@ -47,6 +47,7 @@
 #include "led.h"
 #include "console.h"
 #include "mcc_generated_files/usb/usb_device.h"
+#include "usb_status_indicator.h"
 
 extern void MCC_USB_CDC_DemoTasks(void);
 
@@ -76,6 +77,7 @@ int main(void)
         
         CONSOLE_Tasks();
         MCC_USB_CDC_DemoTasks();
+        USB_STATUS_INDICATOR_Tasks();
     }
 
     return 1;

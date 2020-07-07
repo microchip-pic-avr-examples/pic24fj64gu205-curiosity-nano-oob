@@ -29,6 +29,7 @@
       <itemPath>button.h</itemPath>
       <itemPath>led.h</itemPath>
       <itemPath>timer_1ms.h</itemPath>
+      <itemPath>usb_status_indicator.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -60,6 +61,7 @@
       <itemPath>led.c</itemPath>
       <itemPath>timer_1ms.c</itemPath>
       <itemPath>console.c</itemPath>
+      <itemPath>usb_status_indicator.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
