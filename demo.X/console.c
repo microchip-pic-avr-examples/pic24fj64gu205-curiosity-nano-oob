@@ -50,22 +50,29 @@ void CONSOLE_Tasks(void)
     uint16_t transmitSize = GetFIFODepth();
     uint8_t i;
     
-    if( (USBUSARTIsTxTrfReady() == true) && (transmitSize != 0) )
+    if(USBGetDeviceState() != CONFIGURED_STATE)
     {
-        if(transmitSize > MAX_PACKET)
-        {
-            transmitSize = MAX_PACKET;
-        }
-        
-        for(i=0; i<transmitSize; i++)
-        {
-            txBuffer[i] = FIFOGet();
-        }
-        
-        putUSBUSART(txBuffer,transmitSize);
+        CONSOLE_Initialize();
     }
-    
-    CDCTxService();
+    else
+    {
+        if( (USBUSARTIsTxTrfReady() == true) && (transmitSize != 0) )
+        {
+            if(transmitSize > MAX_PACKET)
+            {
+                transmitSize = MAX_PACKET;
+            }
+
+            for(i=0; i<transmitSize; i++)
+            {
+                txBuffer[i] = FIFOGet();
+            }
+
+            putUSBUSART(txBuffer,transmitSize);
+        }
+
+        CDCTxService();
+    }
 }
 
 static uint16_t GetFIFODepth(void)

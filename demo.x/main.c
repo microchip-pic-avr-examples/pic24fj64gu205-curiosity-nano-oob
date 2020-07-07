@@ -50,38 +50,87 @@
 
 extern void MCC_USB_CDC_DemoTasks(void);
 
-static bool buttonPressedAlready = false;
+static bool welcomePrinted = false;
+static bool buttonPressedPrinted = false;
 
+static bool IsWelcomeMessageNeeded(void);
+static void PrintWelcomeMessage(void);
+static bool IsButtonPressedMessageNeeded(void);
+static void PrintButtonPressedMessage(void);
+            
 int main(void)
 {
     SYSTEM_Initialize();
 
     while (1)
-    {
-        if(USBGetDeviceState() == CONFIGURED_STATE)
+    {        
+        if(IsWelcomeMessageNeeded() == true)
         {
-            if(BUTTON_IsPressed() == true)
-            {
-                if(buttonPressedAlready == false)
-                {
-                    buttonPressedAlready = true;
-                    CONSOLE_Print("Hello World");
-                }
-                
-                CONSOLE_Print("Button Pressed");
-            }
-
-            CONSOLE_Tasks();
-            MCC_USB_CDC_DemoTasks();
+            PrintWelcomeMessage();
         }
-        else
+        
+        if(IsButtonPressedMessageNeeded() == true)
         {
-            buttonPressedAlready = false;
-            CONSOLE_Initialize();
+            PrintButtonPressedMessage();
         }
+        
+        CONSOLE_Tasks();
+        MCC_USB_CDC_DemoTasks();
     }
 
     return 1;
 }
 
+static bool IsWelcomeMessageNeeded(void)
+{
+    if(USBGetDeviceState() != CONFIGURED_STATE)
+    {
+        welcomePrinted = false;
+        return false;
+    }
+          
+    if(BUTTON_IsPressed() == true)
+    {
+        if(welcomePrinted == false)
+        {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+static void PrintWelcomeMessage(void)
+{
+    welcomePrinted = true;
+    CONSOLE_Print("Hello World\r\n");
+}
+
+static bool IsButtonPressedMessageNeeded(void)
+{
+    if(USBGetDeviceState() != CONFIGURED_STATE)
+    {
+        return false;
+    }
+          
+    if(BUTTON_IsPressed() == true)
+    {
+        if(buttonPressedPrinted == false)
+        {
+            return true;
+        }
+    }
+    else
+    {
+        buttonPressedPrinted = false;
+    }
+    
+    return false;
+}
+
+static void PrintButtonPressedMessage(void)
+{
+    buttonPressedPrinted = true;
+    CONSOLE_Print("Button Pressed\r\n");
+}
 
