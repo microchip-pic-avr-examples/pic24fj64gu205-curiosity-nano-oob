@@ -1,23 +1,23 @@
 /**
-  Generated main.c file from MPLAB Code Configurator
+  @Generated PIC24 / dsPIC33 / PIC32MM MCUs Source File
 
-  @Company
+  @Company:
     Microchip Technology Inc.
 
-  @File Name
-    main.c
+  @File Name:
+    clock.h
 
-  @Summary
-    This is the generated main.c using PIC24 / dsPIC33 / PIC32MM MCUs.
+  @Summary:
+    This is the clock.h file generated using PIC24 / dsPIC33 / PIC32MM MCUs
 
-  @Description
-    This source file provides main entry point for system initialization and application code development.
+  @Description:
+    This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
         Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.167.0
         Device            :  PIC24FJ256GB110
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.50
-        MPLAB 	          :  MPLAB X v5.35
+        MPLAB             :  MPLAB X v5.35
 */
 
 /*
@@ -42,31 +42,39 @@
     TERMS.
 */
 
-#include "mcc_generated_files/system.h"
-#include "button.h"
-#include "led.h"
+#ifndef CLOCK_H
+#define	CLOCK_H
 
-extern void MCC_USB_CDC_DemoTasks(void);
+/**
+  Section: Included Files
+*/
 
-int main(void)
-{
-    SYSTEM_Initialize();
+#include <stdbool.h>
 
-    while (1)
-    {
-        if(BUTTON_IsPressed() == true)
-        {
-            LED_On();
-        }
-        else
-        {
-            LED_Off();
-        }
-        
-        MCC_USB_CDC_DemoTasks();
-    }
+#ifndef _XTAL_FREQ
+#define _XTAL_FREQ  4000000UL
+#endif
 
-    return 1;
-}
+#define CLOCK_SystemFrequencyGet()        (4000000UL)
+
+#define CLOCK_PeripheralFrequencyGet()    (CLOCK_SystemFrequencyGet() / 2)
+
+#define CLOCK_InstructionFrequencyGet()   (CLOCK_SystemFrequencyGet() / 2)
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    Initializes the oscillator to the default states configured in the
+ *                  MCC GUI
+ * @Example
+    CLOCK_Initialize(void);
+ */
+void CLOCK_Initialize(void);
 
 
+#endif	/* CLOCK_H */
+/**
+ End of File
+*/

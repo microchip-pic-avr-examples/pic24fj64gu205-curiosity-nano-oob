@@ -1,17 +1,19 @@
 /**
-  Generated main.c file from MPLAB Code Configurator
+  PIN MANAGER Generated Driver File
 
-  @Company
+  @Company:
     Microchip Technology Inc.
 
-  @File Name
-    main.c
+  @File Name:
+    pin_manager.c
 
-  @Summary
-    This is the generated main.c using PIC24 / dsPIC33 / PIC32MM MCUs.
+  @Summary:
+    This is the generated manager file for the PIC24 / dsPIC33 / PIC32MM MCUs device.  This manager
+    configures the pins direction, initial state, analog setting.
+    The peripheral pin select, PPS, configuration is also handled by this manager.
 
-  @Description
-    This source file provides main entry point for system initialization and application code development.
+  @Description:
+    This source file provides implementations for PIN MANAGER.
     Generation Information :
         Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.167.0
         Device            :  PIC24FJ256GB110
@@ -42,31 +44,40 @@
     TERMS.
 */
 
-#include "mcc_generated_files/system.h"
-#include "button.h"
-#include "led.h"
 
-extern void MCC_USB_CDC_DemoTasks(void);
+/**
+    Section: Includes
+*/
 
-int main(void)
+#include <xc.h>
+#include <stdio.h>
+#include "pin_manager.h"
+
+/**
+ Section: Driver Interface Function Definitions
+*/
+void PIN_MANAGER_Initialize (void)
 {
-    SYSTEM_Initialize();
+    /****************************************************************************
+     * Setting the Output Latch SFR(s)
+     ***************************************************************************/
+    LATA = 0x0000;
+    LATB = 0x0000;
+    LATC = 0x0000;
 
-    while (1)
-    {
-        if(BUTTON_IsPressed() == true)
-        {
-            LED_On();
-        }
-        else
-        {
-            LED_Off();
-        }
-        
-        MCC_USB_CDC_DemoTasks();
-    }
+    /****************************************************************************
+     * Setting the GPIO Direction SFR(s)
+     ***************************************************************************/
+    TRISA = 0xC6FF;
+    TRISB = 0xFFFF;
+    TRISC = 0x701E;
 
-    return 1;
+
+    /****************************************************************************
+     * Setting the Open Drain SFR(s)
+     ***************************************************************************/
+    ODCA = 0x0000;
+    ODCB = 0x0000;
+    ODCC = 0x0000;
 }
-
 

@@ -43,6 +43,7 @@ limitations under the License.
 ********************************************************************/
 void LED_On(void)
 {
+    LED_D3_DIRECTION = PIN_OUTPUT;
     LED_D3_SETTING = LED_ON;
 }
 
@@ -60,6 +61,7 @@ void LED_On(void)
 ********************************************************************/
 void LED_Off(void)
 {
+    LED_D3_DIRECTION = PIN_OUTPUT;
     LED_D3_SETTING = LED_OFF;
 }
 
@@ -77,6 +79,7 @@ void LED_Off(void)
 ********************************************************************/
 void LED_Toggle(void)
 {
+    LED_D3_DIRECTION = PIN_OUTPUT;
     LED_D3_SETTING ^= 1;
 }
 
