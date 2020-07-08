@@ -1168,11 +1168,6 @@ bool USBGetRemoteWakeupStatus(void);
     None                                                                    
   ***************************************************************************/
 USB_DEVICE_STATE USBGetDeviceState(void);
-/*DOM-IGNORE-BEGIN*/
-#define USBGetDeviceState() USBDeviceState
-/*DOM-IGNORE-END*/
-
-
 
 /***************************************************************************
   Function:

@@ -62,6 +62,7 @@ static void PrintButtonPressedMessage(void);
 int main(void)
 {    
     SYSTEM_Initialize();
+    LED_Enable();
         
     while (1)
     { 
