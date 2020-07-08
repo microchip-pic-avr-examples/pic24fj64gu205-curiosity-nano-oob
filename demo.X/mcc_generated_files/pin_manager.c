@@ -79,5 +79,7 @@ void PIN_MANAGER_Initialize (void)
     ODCA = 0x0000;
     ODCB = 0x0000;
     ODCC = 0x0000;
+    
+    IOCPUAbits.CNPUA12 = 1;
 }
 

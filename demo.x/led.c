@@ -16,104 +16,74 @@ limitations under the License.
 
 #include <xc.h>
 
-#include <stdbool.h>
+#define LED_STATE               LATCbits.LATC1
+#define LED_PIN_DIRECTION       TRISCbits.TRISC1
 
-#include "led.h"
+#define LED_ON  0
+#define LED_OFF 1
 
-#define LED_D3_SETTING      LATBbits.LATB0
-#define LED_D3_DIRECTION    TRISBbits.TRISB0
+#define INPUT  1
+#define OUTPUT 0
 
-#define LED_ON  1
-#define LED_OFF 0
+#define MAXIMUM_INTENSITY 0x03FF
+#define DEFAULT_INTENSITY (MAXIMUM_INTENSITY)
 
-#define PIN_INPUT   1
-#define PIN_OUTPUT  0
+static uint16_t current_intensity = DEFAULT_INTENSITY;
 
-/*********************************************************************
-* Function: void LED_On(void);
-*
-* Overview: Turns requested LED on
-*
-* PreCondition: LED configured via LED_Configure()
-*
-* Input: none
-*
-* Output: none
-*
-********************************************************************/
 void LED_On(void)
-{
-    LED_D3_DIRECTION = PIN_OUTPUT;
-    LED_D3_SETTING = LED_ON;
+{   
+    if(CCP4CON1Lbits.CCPON == 0)
+    {
+        LED_PIN_DIRECTION = OUTPUT;
+
+        _RP17R = 26; //26 = OCM4A -> RC1[RP17]
+
+        //uses CCP4-PWM
+        CCP4RAL = 0;
+        CCP4RBL = MAXIMUM_INTENSITY-current_intensity;  //0 is on for this LED so need to invert
+        CCP4PRL = MAXIMUM_INTENSITY;
+        CCP4PRH = 0;
+        CCP4TMRL = 0;
+        CCP4CON1Lbits.MOD = 0b0100;     //dual-compare
+        CCP4CON1Lbits.T32 = 0;          //16-bit mode
+        CCP4CON1Lbits.CLKSEL = 0b000;   //System clock
+        CCP4CON1Lbits.TMRPS = 0b00;     //1:1 Pre-scaler 
+        CCP4CON1Lbits.CCSEL = 0;        //Output compare
+        CCP4CON1Lbits.CCPON = 1;        //Enable   
+    }
 }
 
-/*********************************************************************
-* Function: void LED_Off(void);
-*
-* Overview: Turns requested LED off
-*
-* PreCondition: LED configured via LEDConfigure()
-*
-* Input: none
-*
-* Output: none
-*
-********************************************************************/
 void LED_Off(void)
 {
-    LED_D3_DIRECTION = PIN_OUTPUT;
-    LED_D3_SETTING = LED_OFF;
+    LED_PIN_DIRECTION = OUTPUT;
+    LED_STATE = LED_OFF;
+    
+    CCP4CON1Lbits.CCPON = 0;        //Disable 
 }
 
-/*********************************************************************
-* Function: void LED_Toggle(void);
-*
-* Overview: Toggles the state of the requested LED
-*
-* PreCondition: LED configured via LEDConfigure()
-*
-* Input: none
-*
-* Output: none
-*
-********************************************************************/
 void LED_Toggle(void)
 {
-    LED_D3_DIRECTION = PIN_OUTPUT;
-    LED_D3_SETTING ^= 1;
+	if(CCP4CON1Lbits.CCPON)
+    {
+        LED_Off();
+    }
+    else
+    {
+        LED_On();
+    }
 }
 
-/*********************************************************************
-* Function: bool LED_Get(void);
-*
-* Overview: Returns the current state of the requested LED
-*
-* PreCondition: LED configured via LEDConfigure()
-*
-* Input: none
-*
-* Output: true if on, false if off
-*
-********************************************************************/
-bool LED_Get(void)
-{
-    return ( ( LED_D3_SETTING == LED_ON ) ? true : false ) ;
+void LED_SetIntensity(uint16_t new_intensity)
+{  
+    //Convert 16-bit to 10-bit to reduce flicker/jitter
+    new_intensity >>= 6;
+    
+    CCP4RBL = MAXIMUM_INTENSITY-new_intensity; //active low so invert
+    
+    current_intensity = new_intensity;
+    
+    if(CCP4TMRL > new_intensity)
+    {
+        CCP4TMRL = 0;
+    }
 }
-
-/*********************************************************************
-* Function: void LED_Enable(void);
-*
-* Overview: Configures the LED for use by the other LED API
-*
-* PreCondition: none
-*
-* Input: none
-*
-* Output: none
-*
-********************************************************************/
-void LED_Enable(void)
-{
-    LED_D3_DIRECTION = PIN_OUTPUT;
-}
-

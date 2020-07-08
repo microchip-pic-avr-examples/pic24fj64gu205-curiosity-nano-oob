@@ -19,8 +19,8 @@ limitations under the License.
 #include <stdbool.h>
 #include "button.h"
 
-#define PIN_STATE  PORTAbits.RA13
-#define PIN_DIRECTION  TRISAbits.TRISA13
+#define PIN_STATE  PORTAbits.RA12
+#define PIN_DIRECTION  TRISAbits.TRISA12
 
 #define BUTTON_PRESSED      0
 #define BUTTON_NOT_PRESSED  1
@@ -42,6 +42,7 @@ limitations under the License.
  ********************************************************************/
 bool BUTTON_IsPressed ( void )
 {
+    IOCPUAbits.CNPUA12 = 1;
     PIN_DIRECTION = PIN_INPUT;
     return ( (PIN_STATE == BUTTON_PRESSED) ? true : false);
 }

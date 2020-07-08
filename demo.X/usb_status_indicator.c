@@ -14,7 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *******************************************************************************/
 
+#include "mcc_generated_files/usb/usb_device.h"
+#include "led.h"
+
 void USB_STATUS_INDICATOR_Tasks(void)
 {
-    
+    if(USBGetDeviceState() == CONFIGURED_STATE)
+    {
+        LED_On();
+    }
+    else
+    {
+        LED_Off();
+    }
 }

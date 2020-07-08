@@ -60,11 +60,11 @@ static bool IsButtonPressedMessageNeeded(void);
 static void PrintButtonPressedMessage(void);
             
 int main(void)
-{
+{    
     SYSTEM_Initialize();
-
+        
     while (1)
-    {        
+    { 
         if(IsWelcomeMessageNeeded() == true)
         {
             PrintWelcomeMessage();
@@ -105,7 +105,10 @@ static bool IsWelcomeMessageNeeded(void)
 static void PrintWelcomeMessage(void)
 {
     welcomePrinted = true;
-    CONSOLE_Print("Hello World\r\n");
+    CONSOLE_Print("\r\n\r\n");
+    CONSOLE_Print("*******************************************************\r\n");
+    CONSOLE_Print("PIC24FJ64GU205 Curiosity Nano Demo\r\n");
+    CONSOLE_Print("*******************************************************\r\n");
 }
 
 static bool IsButtonPressedMessageNeeded(void)
