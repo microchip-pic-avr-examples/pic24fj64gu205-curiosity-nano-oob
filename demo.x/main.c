@@ -110,7 +110,7 @@ static bool IsWelcomeMessageNeeded(void)
 static void PrintWelcomeMessage(void)
 {
     welcomePrinted = true;
-    CONSOLE_Print("\r\n\r\n");
+    CONSOLE_Print("\r\n");
     CONSOLE_Print("*******************************************************\r\n");
     CONSOLE_Print("PIC24FJ64GU205 Curiosity Nano Demo\r\n");
     CONSOLE_Print("*******************************************************\r\n");
