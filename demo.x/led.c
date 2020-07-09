@@ -33,16 +33,23 @@ limitations under the License.
 
 #define MAXIMUM_INTENSITY 0x03FF
 #define DEFAULT_INTENSITY (MAXIMUM_INTENSITY)
+#define DEFAULT_FADE_RATE 10
 
 static uint16_t current_intensity = DEFAULT_INTENSITY;
 static bool ledOn = false;
-static int fadeRate = 20;
+static int fadeRate = 10;
 
 static volatile uint16_t fadeCount = 0;
-#define FADE_COUNT 200
+
+static void FullOn(void);
+static void FullOff(void);
+static void StartFade(void);
 
 void LED_Enable(void)
 {
+    fadeRate = DEFAULT_FADE_RATE;
+    current_intensity = DEFAULT_INTENSITY;
+    
     LED_PIN_DIRECTION = OUTPUT;
     LED_STATE = LED_OFF;
     
@@ -63,6 +70,7 @@ void LED_Enable(void)
     CCP4PRL = MAXIMUM_INTENSITY;
     CCP4PRH = 0;
     CCP4TMRL = 0;
+    CCP4CON3Hbits.POLACE = 1;
     CCP4CON1Lbits.MOD = 0b0100;     //dual-compare
     CCP4CON1Lbits.T32 = 0;          //16-bit mode
     CCP4CON1Lbits.CLKSEL = 0b000;   //System clock
@@ -76,11 +84,12 @@ void LED_On(void)
     {
         ledOn = true;
         
-        if( CCP4CON1Lbits.CCPON == 0 )
+        if(fadeRate == 0){
+            FullOn();
+        }
+        else
         {
-            fadeCount = 0;
-
-            CCP4CON1Lbits.CCPON = 1;        //Enable   
+            StartFade();
         }
     }
 }
@@ -91,12 +100,13 @@ void LED_Off(void)
     {
         ledOn = false;
         
-        if( CCP4CON1Lbits.CCPON == 0 )
+        if(fadeRate == 0)
         {
-            ledOn = false;
-            fadeCount = 0;
-
-            CCP4CON1Lbits.CCPON = 1;        //Enable   
+            FullOff();
+        }
+        else
+        {
+            StartFade();
         }
     }
 }
@@ -118,7 +128,7 @@ void LED_SetIntensity(uint16_t new_intensity)
     //Convert 16-bit to 10-bit to reduce flicker/jitter
     new_intensity >>= 6;
     
-    CCP4RBL = MAXIMUM_INTENSITY-new_intensity; //active low so invert
+    CCP4RBL = new_intensity;
     
     current_intensity = new_intensity;
     
@@ -128,41 +138,63 @@ void LED_SetIntensity(uint16_t new_intensity)
     }
 }
 
+void LED_SetFadeRate(uint16_t rate)
+{
+    fadeRate = rate;
+}
+
 void __attribute__((interrupt,auto_psv)) _CCT4Interrupt(void)
 {
     _CCT4IF = 0;
     
-    if(fadeCount++ == FADE_COUNT)
+    if(fadeCount++ == fadeRate)
     {
         fadeCount = 0;
         
         if(ledOn == true)
         {
-            if(CCP4RBL < fadeRate)
+            if(CCP4RBL == current_intensity)
             {
-                LED_PIN_DIRECTION = OUTPUT;
-                LED_STATE = LED_ON;
-                CCP4CON1Lbits.CCPON = 0;
-                CCP4RBL = 0;
+                FullOn();
             }
             else
             {
-                CCP4RBL -= fadeRate;
+                CCP4RBL++;
             }
         }
         else
         {
-            if(CCP4RBL + fadeRate > MAXIMUM_INTENSITY)
+            if(CCP4RBL == 0)
             {
-                LED_PIN_DIRECTION = OUTPUT;
-                LED_STATE = LED_OFF;
-                CCP4CON1Lbits.CCPON = 0;
-                CCP4RBL = MAXIMUM_INTENSITY;
+                FullOff();
             }
             else
             {
-                CCP4RBL += fadeRate;
+                CCP4RBL--;
             }
         }
+    }
+}
+
+static void FullOn(void)
+{
+    LED_PIN_DIRECTION = OUTPUT;
+    LED_STATE = LED_ON;
+    CCP4CON1Lbits.CCPON = 0;
+}
+
+static void FullOff(void)
+{
+    LED_PIN_DIRECTION = OUTPUT;
+    LED_STATE = LED_OFF;
+    CCP4CON1Lbits.CCPON = 0;
+}
+
+static void StartFade(void)
+{
+    if( CCP4CON1Lbits.CCPON == 0 )
+    {
+        fadeCount = 0;
+        CCP4CON1Lbits.CCPON = 1;        //Enable   
     }
 }

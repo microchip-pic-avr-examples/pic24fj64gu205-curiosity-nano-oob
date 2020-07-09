@@ -89,4 +89,34 @@ bool LED_Get(void);
 ********************************************************************/
 void LED_Enable(void);
 
+/*********************************************************************
+* Function: bool LED_SetFadeRate(uint16_t rate);
+*
+* Overview: Configures the LED fade rate.  Units are arbitrary based
+* on the system clock.
+*
+* PreCondition: none
+*
+* Input: none
+*
+* Output: none
+*
+********************************************************************/
+void LED_SetFadeRate(uint16_t rate);
+
+/*********************************************************************
+* Function: bool LED_Enable(uint16_t new_intensity);
+*
+* Overview: Configures the maximum LED intensity when the LED is on.
+*
+* PreCondition: none
+*
+* Input: none
+*
+* Output: none
+*
+********************************************************************/
+void LED_SetIntensity(uint16_t new_intensity);
+
+
 #endif //LED_H

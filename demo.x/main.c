@@ -46,6 +46,7 @@
 #include "button.h"
 #include "led.h"
 #include "console.h"
+#include "timer_1ms.h"
 #include "mcc_generated_files/usb/usb_device.h"
 #include "usb_status_indicator.h"
 
@@ -63,9 +64,12 @@ int main(void)
 {    
     SYSTEM_Initialize();
     LED_Enable();
+    TIMER_SetConfiguration(TIMER_CONFIGURATION_1MS);
         
     while (1)
     { 
+        USBDeviceAttach();
+        
         if(IsWelcomeMessageNeeded() == true)
         {
             PrintWelcomeMessage();
