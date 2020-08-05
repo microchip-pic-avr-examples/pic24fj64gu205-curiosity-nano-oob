@@ -420,11 +420,11 @@ void USBMaskAllUSBInterrupts(void)
     __builtin_disi(16); //Temporarily disable all interrupts, to prevent an
                         //ISR from modifying the xxxIE bit between our read
                         //of the value, and when we clear it.
-    if(_USBIE == 1)
+    if(_USB1IE == 1)
     {
         USBIESave = 1;
     }
-    _USBIE = 0;        //Disable USB interrupt vectoring.
+    _USB1IE = 0;        //Disable USB interrupt vectoring.
 }
 
 
@@ -456,7 +456,7 @@ void USBRestoreUSBInterrupts(void)
     //Restore the previous USBIE setting, that was saved when USBMaskAllUSBInterrupts() was called.
     if(USBIESave)
     {
-        _USBIE = 1;
+        _USB1IE = 1;
     }
 }
 
@@ -519,7 +519,7 @@ static void USBSaveAndPrepareInterruptsForSleep(void)
     U1IE = 0;
     U1OTGIE_save = U1OTGIE;
     U1OTGIE = 0;
-    USBIPLSave = _USBIP;
+    USBIPLSave = _USB1IP;
 
     //Now enable only the USBIE + ACVIE + SOFIE + URSTIE interrupt sources, plus possible remote
     //wakeup stimulus interrupt source(s) (but only when legal to perform remote wakeup),
@@ -527,10 +527,10 @@ static void USBSaveAndPrepareInterruptsForSleep(void)
     USBClearInterruptFlag(USBActivityIFReg, USBActivityIFBitNum);
     USBClearInterruptFlag(USBRESUMEIFReg, USBRESUMEIFBitNum);
 
-    _USBIF = 0;
+    _USB1IF = 0;
     _ACTVIE = 1;
-    _USBIP = 4;    //Make sure USB module IPL is > 0, so it can at least wake the device from sleep
-    _USBIE = 1;    //Enable the top level USB module IE bit now, to enable wake from sleep.
+    _USB1IP = 4;    //Make sure USB module IPL is > 0, so it can at least wake the device from sleep
+    _USB1IE = 1;    //Enable the top level USB module IE bit now, to enable wake from sleep.
 }
 
 
@@ -577,7 +577,7 @@ static void USBRestorePreviousInterruptSettings(void)
     }
     U1IE = U1IE_save;
     U1OTGIE = U1OTGIE_save;
-    _USBIP = USBIPLSave;
+    _USB1IP = USBIPLSave;
 
 
     //Restore CPU interrupt priority level to allow normal vectoring again.

@@ -54,5 +54,5 @@ void INTERRUPT_Initialize (void)
 {
     //    USBI: USB1 - USB1 Interrupt
     //    Priority: 1
-        IPC21bits.USBIP = 7;
+        IPC21bits.USB1IP = 7;
 }

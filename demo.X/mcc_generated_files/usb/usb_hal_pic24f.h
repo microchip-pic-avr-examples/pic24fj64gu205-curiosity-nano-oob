@@ -351,10 +351,10 @@ typedef union _POINTER
 
 #define ConvertToPhysicalAddress(a) ((uint16_t)(a))
 #define ConvertToVirtualAddress(a)  ((void *)(a))
-#define USBClearUSBInterrupt() IFS5bits.USBIF = 0;
+#define USBClearUSBInterrupt() IFS5bits.USB1IF = 0;
 #if defined(USB_INTERRUPT)
-    #define USBMaskInterrupts() {IEC5bits.USBIE = 0;}
-    #define USBUnmaskInterrupts() {IEC5bits.USBIE = 1;}
+    #define USBMaskInterrupts() {IEC5bits.USB1IE = 0;}
+    #define USBUnmaskInterrupts() {IEC5bits.USB1IE = 1;}
 #else
     #define USBMaskInterrupts() 
     #define USBUnmaskInterrupts() 
@@ -362,13 +362,13 @@ typedef union _POINTER
 
 //STALLIE, IDLEIE, TRNIE, and URSTIE are all enabled by default and are required
 #if defined(USB_INTERRUPT)
-    #define USBEnableInterrupts() {IEC5bits.USBIE=1;}
+    #define USBEnableInterrupts() {IEC5bits.USB1IE=1;}
 #else
     #define USBEnableInterrupts()
 #endif
 
-#define USBDisableInterrupts() {IEC5bits.USBIE=0;}
-#define USBInterruptFlag                IFS5bits.USBIF
+#define USBDisableInterrupts() {IEC5bits.USB1IE=0;}
+#define USBInterruptFlag                IFS5bits.USB1IF
 
 
 
@@ -682,7 +682,7 @@ Function:
     void USBMaskAllUSBInterrupts(void)
 
 Summary:
-    This function saves the current USBIE bit state, and then clears it
+    This function saves the current USB1IE bit state, and then clears it
     to prevent any USB interrupt vectoring.
 
 PreCondition:
