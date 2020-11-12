@@ -87,7 +87,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC24F-GP-GU_DFP" vendor="Microchip" version="0.1.51"/>
+        <pack name="PIC24F-GP-GU_DFP" vendor="Microchip" version="1.0.59"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -108,6 +108,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>

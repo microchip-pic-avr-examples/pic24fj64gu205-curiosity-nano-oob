@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>PIC24FJ64GU205 Curiosity Nano Demo</name>
+            <name>pic24fj64gu205-curiosity-nano-oob</name>
             <creation-uuid>16874d7d-8066-4a95-836b-10b311c4014a</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
