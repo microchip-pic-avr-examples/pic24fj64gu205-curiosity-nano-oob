@@ -42,6 +42,25 @@ pipeline {
                 checkout scm
             }
         }
+		
+		stage('Configuration file update') {
+            steps {
+                script {      
+                    execute("git clone https://bitbucket.microchip.com/scm/citd/tool-mplabx-c-project-generator.git")
+                    
+                    MPLABX_PATH= sh (script: 'update-alternatives --list MPLABX_PATH',returnStdout: true).trim()
+                    def packsDirectory = "${MPLABX_PATH}/packs"    
+                    
+                    XC16_PATH= sh (script: 'update-alternatives --list xc16-gcc',returnStdout: true).trim()
+                    def xc16Version = XC16_PATH.split('/')[4].substring(1)
+                    
+                    XC32_PATH= sh (script: 'update-alternatives --list xc32-gcc',returnStdout: true).trim()
+                    def xc32Version = XC32_PATH.split('/')[4].substring(1)
+                        
+                    execute("cd ./tool-mplabx-c-project-generator && node configGenerator.js sp=../ v16=${xc16Version} v32=${xc32Version} -ol=${params.COMPILER_OPTIMIZATION_LEVEL} packs=${packsDirectory}")
+                }
+            }
+        }
 
         stage('Build') {
             steps {
