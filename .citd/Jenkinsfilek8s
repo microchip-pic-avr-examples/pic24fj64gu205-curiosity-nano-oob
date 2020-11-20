@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            label 'github_deployment'
+            label 'pic24fj64gu205-curiosity-nano-oob'
 			defaultContainer 'xc16-mplabx-sonar-fmpp-python'
             yamlFile '.citd/cloudprovider.yml'
         }
