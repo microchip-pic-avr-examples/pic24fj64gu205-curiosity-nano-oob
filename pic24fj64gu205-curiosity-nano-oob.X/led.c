@@ -1,18 +1,16 @@
-/*******************************************************************************
-Copyright 2016 Microchip Technology Inc. (www.microchip.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*******************************************************************************/
+//Copyright 2016 Microchip Technology Inc. (www.microchip.com)
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
 
 #ifndef SYSTEM_PERIPHERAL_CLOCK
 #define SYSTEM_PERIPHERAL_CLOCK 16000000
@@ -113,7 +111,7 @@ void LED_Off(void)
 
 void LED_Toggle(void)
 {
-	if(CCP4CON1Lbits.CCPON)
+	if(CCP4CON1Lbits.CCPON == 1u)
     {
         LED_Off();
     }
@@ -126,13 +124,11 @@ void LED_Toggle(void)
 void LED_SetIntensity(uint16_t new_intensity)
 {  
     //Convert 16-bit to 10-bit to reduce flicker/jitter
-    new_intensity >>= 6;
+    CCP4RBL = new_intensity >> 6;;
     
-    CCP4RBL = new_intensity;
+    current_intensity = CCP4RBL;
     
-    current_intensity = new_intensity;
-    
-    if(CCP4TMRL > new_intensity)
+    if(CCP4TMRL > CCP4RBL)
     {
         CCP4TMRL = 0;
     }

@@ -1,18 +1,16 @@
-/*******************************************************************************
-Copyright 2016 Microchip Technology Inc. (www.microchip.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*******************************************************************************/
+//Copyright 2016 Microchip Technology Inc. (www.microchip.com)
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
 
 #include <xc.h>
 
@@ -28,28 +26,18 @@ limitations under the License.
 #pragma message "This module requires a definition for the peripheral clock frequency.  Assuming 16MHz Fcy (32MHz Fosc).  Define value if this is not correct."
 #endif
 
-#define CLOCK_DIVIDER TIMER_PRESCALER_1
-#define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/1)
-
-#if (PR3_SETTING > 0xFFFF)
-#undef CLOCK_DIVIDER
-#undef PR3_SETTING
-#define CLOCK_DIVIDER TIMER_PRESCALER_8
-#define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/8)
-#endif
-
-#if (PR3_SETTING > 0xFFFF)
-#undef CLOCK_DIVIDER
-#undef PR3_SETTING
-#define CLOCK_DIVIDER TIMER_PRESCALER_64
-#define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/64)
-#endif
-
-#if (PR3_SETTING > 0xFFFF)
-#undef CLOCK_DIVIDER
-#undef PR3_SETTING
-#define CLOCK_DIVIDER TIMER_PRESCALER_256
-#define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/256)
+#if ((SYSTEM_PERIPHERAL_CLOCK/1000/64) > 0xFFFF)
+    #define CLOCK_DIVIDER TIMER_PRESCALER_256
+    #define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/256)
+#elif ((SYSTEM_PERIPHERAL_CLOCK/1000/8) > 0xFFFF)
+    #define CLOCK_DIVIDER TIMER_PRESCALER_64
+    #define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/64)
+#elif ((SYSTEM_PERIPHERAL_CLOCK/1000/1) > 0xFFFF)
+    #define CLOCK_DIVIDER TIMER_PRESCALER_8
+    #define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/8)
+#else
+    #define CLOCK_DIVIDER TIMER_PRESCALER_1
+    #define PR3_SETTING (SYSTEM_PERIPHERAL_CLOCK/1000/1)
 #endif
 
 
@@ -101,7 +89,7 @@ void TIMER_CancelTick(TICK_HANDLER handle)
 {
     uint8_t i;
 
-    for(i = 0; i < TIMER_MAX_1MS_CLIENTS; i++)
+    for(i = 0; i < (uint8_t)TIMER_MAX_1MS_CLIENTS; i++)
     {
         if(requests[i].handle == handle)
         {
@@ -126,25 +114,25 @@ void TIMER_CancelTick(TICK_HANDLER handle)
 bool TIMER_RequestTick ( TICK_HANDLER handle , uint32_t rate )
 {
     uint8_t i;
+    bool result = false;
 	
-    if(configured == false)
+    if(configured == true)
     {
-        return false;
-    }
-
-    for(i = 0; i < TIMER_MAX_1MS_CLIENTS; i++)
-    {
-        if(requests[i].handle == NULL)
+        for(i = 0; i < (uint8_t)TIMER_MAX_1MS_CLIENTS; i++)
         {
-            requests[i].handle = handle;
-            requests[i].rate = rate;
-            requests[i].count = 0;
+            if(requests[i].handle == NULL)
+            {
+                requests[i].handle = handle;
+                requests[i].rate = rate;
+                requests[i].count = 0;
 
-            return true;
+                result = true;
+                break;
+            }
         }
     }
 
-    return false;
+    return result;
 }
 
 /*********************************************************************
@@ -161,10 +149,12 @@ bool TIMER_RequestTick ( TICK_HANDLER handle , uint32_t rate )
  ********************************************************************/
 bool TIMER_SetConfiguration ( TIMER_CONFIGURATIONS configuration )
 {
+    bool result = false;
+    
     switch(configuration)
     {
         case TIMER_CONFIGURATION_1MS:
-            memset(requests, 0, sizeof(requests));
+            (void)memset(requests, 0, sizeof(requests));
             
             IPC2bits.T3IP = TIMER_INTERRUPT_PRIORITY;
             IFS0bits.T3IF = 0;
@@ -182,15 +172,20 @@ bool TIMER_SetConfiguration ( TIMER_CONFIGURATIONS configuration )
             IEC0bits.T3IE = 1;
 
             configured = true;
-            return true;
+            result = true;
+            break;
 
         case TIMER_CONFIGURATION_OFF:
             IEC0bits.T3IE = 0;
             configured = false;
-            return true;
+            result = true;
+            break;
+            
+        default:
+            break;
     }
 
-    return false;
+    return result;
 }
 
 /****************************************************************************
@@ -216,7 +211,7 @@ void __attribute__((__interrupt__, auto_psv)) _T3Interrupt( void )
 {
     uint8_t i;
 
-    for(i = 0; i < TIMER_MAX_1MS_CLIENTS; i++)
+    for(i = 0; i < (uint8_t)TIMER_MAX_1MS_CLIENTS; i++)
     {
         if(requests[i].handle != NULL)
         {

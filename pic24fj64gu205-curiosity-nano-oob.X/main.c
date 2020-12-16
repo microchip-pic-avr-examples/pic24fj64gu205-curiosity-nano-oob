@@ -64,7 +64,7 @@ int main(void)
 {    
     SYSTEM_Initialize();
     LED_Enable();
-    TIMER_SetConfiguration(TIMER_CONFIGURATION_1MS);
+    (void)TIMER_SetConfiguration(TIMER_CONFIGURATION_1MS);
         
     while (1)
     { 
@@ -90,21 +90,25 @@ int main(void)
 
 static bool IsWelcomeMessageNeeded(void)
 {
+    bool result = false;
+    
     if(USBGetDeviceState() != CONFIGURED_STATE)
     {
         welcomePrinted = false;
-        return false;
+        result = false;
     }
-          
-    if(BUTTON_IsPressed() == true)
+    else
     {
-        if(welcomePrinted == false)
+        if(BUTTON_IsPressed() == true)
         {
-            return true;
+            if(welcomePrinted == false)
+            {
+                result = true;
+            }
         }
     }
     
-    return false;
+    return result;
 }
 
 static void PrintWelcomeMessage(void)
@@ -118,24 +122,24 @@ static void PrintWelcomeMessage(void)
 
 static bool IsButtonPressedMessageNeeded(void)
 {
-    if(USBGetDeviceState() != CONFIGURED_STATE)
+    bool result = false;
+    
+    if(USBGetDeviceState() == CONFIGURED_STATE)
     {
-        return false;
-    }
-          
-    if(BUTTON_IsPressed() == true)
-    {
-        if(buttonPressedPrinted == false)
+        if(BUTTON_IsPressed() == true)
         {
-            return true;
+            if(buttonPressedPrinted == false)
+            {
+                result = true;
+            }
+        }
+        else
+        {
+            buttonPressedPrinted = false;
         }
     }
-    else
-    {
-        buttonPressedPrinted = false;
-    }
     
-    return false;
+    return result;
 }
 
 static void PrintButtonPressedMessage(void)
