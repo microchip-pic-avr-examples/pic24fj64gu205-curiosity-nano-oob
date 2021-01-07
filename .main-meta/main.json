@@ -39,9 +39,7 @@
          "USB"
       ],
       "keywords":[
-         "GPIO",
-         "USB",
-		 "PIC24F"
+         "USB"
       ]
    }
 }
