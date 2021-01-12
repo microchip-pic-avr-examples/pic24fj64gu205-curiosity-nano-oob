@@ -19,7 +19,7 @@ https://microchip.com/PIC24FJ64GU205
 * A terminal program
 
 ## Hardware Used
-* PIC24FJ64GU205 Curiosity Nano Development Board - https://www.microchip.com/EV95N98A
+* PIC24FJ64GU205 Curiosity Nano Development Board - https://www.microchip.com/EV10K72A
 * Micro-USB cable (2 cables if programming/debugging)
 
 ## Setup
