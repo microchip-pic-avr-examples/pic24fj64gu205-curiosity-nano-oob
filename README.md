@@ -2,23 +2,25 @@
 
 ## PIC24FJ64GU205 Curiosity Nano Development Board Out-of-the-Box Demo
 
+![Board](images/board.png)
+
 ## Summary
 
-LED on the board "breaths" while the application is not 
+LED on the board fades while the application is not 
 connected to the USB port.
 
 When connected, the board will print a "Button Pressed" message
 on a serial terminal whenever the button is pressed.
 
 ## Related Documentation
-http://microchip.com/PIC24FJ64GU205
+https://microchip.com/PIC24FJ64GU205
 
 ## Software Used 
 * A terminal program
 
 ## Hardware Used
-* PIC24FJ64GU205 Curiosity Nano Development Board
-* Micro-USB cable (2 cables if debugging)
+* PIC24FJ64GU205 Curiosity Nano Development Board - https://www.microchip.com/EV95N98A
+* Micro-USB cable (2 cables if programming/debugging)
 
 ## Setup
 
@@ -33,7 +35,7 @@ There is no other hardware setup required.
 ## Operation
 
 If the board is powered but not connected through the "TARGET 
-USB" connector, then the LED on the board will "breath" on and
+USB" connector, then the LED on the board will fade on and
 off.  
 
 If the board is connected through the "TARGET USB" port to a PC
