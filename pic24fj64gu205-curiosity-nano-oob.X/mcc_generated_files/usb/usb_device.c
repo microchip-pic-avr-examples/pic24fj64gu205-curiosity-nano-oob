@@ -830,20 +830,6 @@ void USBDeviceTasks(void)
     USBClearUSBInterrupt();
 }//end of USBDeviceTasks()
 
-
-USB_DEVICE_STATE USBGetDeviceState(void)
-{
-#ifdef USE_USB_BUS_SENSE_IO
-    if(USB_BUS_SENSE == 0)
-    {
-        USBDeviceState = DETACHED_STATE;
-    }
-#endif
-    
-    return USBDeviceState;
-}
-
-
 /*******************************************************************************
   Function:
         void USBEnableEndpoint(uint8_t ep, uint8_t options)

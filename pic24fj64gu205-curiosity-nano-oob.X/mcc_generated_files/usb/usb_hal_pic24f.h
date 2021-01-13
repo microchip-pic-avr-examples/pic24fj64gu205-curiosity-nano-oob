@@ -38,60 +38,7 @@ please contact mla_licensing@microchip.com
 /****** Constant definitions *************************************************/
 /*****************************************************************************/
 
-
-//Device specific IECx register count.  Useful during interrupt context save and 
-//restore operations (such as prior to and after entering sleep on suspend).
-//IEC0-IEC5 on PIC24FJ64GB004 Family devices
-//IEC0-IEC5 on PIC24FJ256GB110 Family devices
-//IEC0-IEC5 on PIC24FJ256GB210 Family devices
-//IEC0-IEC6 on PIC24FJ256DA210 Family devices
-//IEC0-IEC7 on PIC24FJ128GC010 Family devices
-//IEC0-IEC7 on PIC24FJ128GB204 Family devices
-//IEC0-IEC7 on PIC24FJ256GB412 Family devices
-#if defined(__PIC24FJ64GB004__) || defined(__PIC24FJ64GB002__) || defined(__PIC24FJ32GB004__) || defined(__PIC24FJ32GB002__)    \
-    || defined(__PIC24FJ256GB110__) || defined(__PIC24FJ192GB110__) || defined(__PIC24FJ128GB110__) || defined(__PIC24FJ64GB110__) || defined(__PIC24FJ256GB108__) || defined(__PIC24FJ192GB108__) || defined(__PIC24FJ128GB108__) || defined(__PIC24FJ64GB108__)  || defined(__PIC24FJ256GB106__) || defined(__PIC24FJ192GB106__) || defined(__PIC24FJ128GB106__) || defined(__PIC24FJ64GB106__) 
-
-    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  6   //Number of IECx registers implemented in the microcontroller (varies from device to device, make sure this is set correctly for the intended CPU)
-    #define USB_HAL_VBUSTristate()                  //No GPIO driver on VBUS on these devices.
-
-#elif defined(__PIC24FJ256GB210__) || defined(__PIC24FJ128GB210__)  || defined(__PIC24FJ256GB206__) || defined(__PIC24FJ128GB206__)
-
-    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  6   //Number of IECx registers implemented in the microcontroller (varies from device to device, make sure this is set correctly for the intended CPU)
-    #define USB_HAL_VBUSTristate()    {TRISFbits.TRISF7 = 1;}
-
-#elif defined(__PIC24FJ256DA210__) || defined(__PIC24FJ128DA210__) || defined(__PIC24FJ256DA206__) || defined(__PIC24FJ128DA206__) || defined(__PIC24FJ256DA110__) || defined(__PIC24FJ128DA110__) || defined(__PIC24FJ256DA106__) || defined(__PIC24FJ128DA106__)
-
-    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  7   //Number of IECx registers implemented in the microcontroller (varies from device to device, make sure this is set correctly for the intended CPU)
-    #define USB_HAL_VBUSTristate()    {TRISFbits.TRISF7 = 1;}
-
-#elif defined(__PIC24FJ128GB204__) || defined(__PIC24FJ64GB204__) || defined(__PIC24FJ128GB202__) || defined(__PIC24FJ64GB202__)
-
-    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  8   //Number of IECx registers implemented in the microcontroller (varies from device to device, make sure this is set correctly for the intended CPU)
-    #define USB_HAL_VBUSTristate()    {TRISBbits.TRISB6 = 1;}
-
-#elif  defined(__PIC24FJ128GC010__)  || defined(__PIC24FJ64GC010__)   || defined(__PIC24FJ128GC006__) \
-    || defined(__PIC24FJ64GC006__)   || defined(__PIC24FJ128GB204__)  || defined(__PIC24FJ64GB204__)  \
-    || defined(__PIC24FJ128GB202__)  || defined(__PIC24FJ64GB202__)   || defined(__PIC24FJ256GB410__) \
-    || defined(__PIC24FJ256GB412__)  || defined(__PIC24FJ256GB406__)  \
-    || defined(__PIC24FJ128GB410__)  || defined(__PIC24FJ128GB412__)  || defined(__PIC24FJ128GB406__) \
-    || defined(__PIC24FJ64GB410__)   || defined(__PIC24FJ64GB412__)   || defined(__PIC24FJ64GB406__)  \
-    || defined(__PIC24FJ1024GB610__) || defined(__PIC24FJ512GB610__)  || defined(__PIC24FJ256GB610__) \
-    || defined(__PIC24FJ128GB610__)  || defined(__PIC24FJ1024GB606__) || defined(__PIC24FJ512GB606__) \
-    || defined(__PIC24FJ256GB606__)  || defined(__PIC24FJ128GB606__)  \
-    || defined(__PIC24FJ512GU410__)  || defined(__PIC24FJ512GU408__)  || defined(__PIC24FJ512GU406__) \
-    || defined(__PIC24FJ512GU405__)  || defined(__PIC24FJ256GU410__)  || defined(__PIC24FJ256GU408__) \
-    || defined(__PIC24FJ256GU406__)  || defined(__PIC24FJ256GU405__)  || defined(__PIC24FJ128GU410__) \
-    || defined(__PIC24FJ128GU408__)  || defined(__PIC24FJ128GU406__)  || defined(__PIC24FJ128GU405__)
-    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  8   //Number of IECx registers implemented in the microcontroller (varies from device to device, make sure this is set correctly for the intended CPU)
-    #define USB_HAL_VBUSTristate()    {TRISFbits.TRISF7 = 1;}
-#else
-    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  8              // <--- Update this number with the real number for your device and uncomment (and delete the above #error).
-    #define USB_HAL_VBUSTristate()    {}  // <-- replace the "x" characters with the correct values for the VBUS GPIO pin (if the microcontroller selected has GPIO functionality on VBUS)
-
-#endif
-
-
-
+#define USB_HAL_VBUSTristate()    {_TRISB6 = 1;}
 
 #if (USB_PING_PONG_MODE == USB_PING_PONG__NO_PING_PONG)
     #define BDT_NUM_ENTRIES      ((USB_MAX_EP_NUMBER + 1) * 2)
@@ -242,8 +189,8 @@ please contact mla_licensing@microchip.com
 #define CTRL_TRF_SETUP_ADDR_TAG
 #define CTRL_TRF_DATA_ADDR_TAG
 
-//----- Depricated defintions - will be removed at some point of time----------
-//--------- Depricated in v2.2
+//----- Deprecated definitions - will be removed at some point of time----------
+//--------- Deprecated in v2.2
 #define _LS                             0x00        // Use Low-Speed USB Mode
 #define _FS                             0x00        // Use Full-Speed USB Mode
 #define _TRINT                          0x00        // Use internal transceiver
@@ -540,7 +487,7 @@ bool USBSleepOnSuspend(void);
 
 /********************************************************************
     Function:
-        void DisableNonZeroEndpoints(UINT8 last_ep_num)
+        void DisableNonZeroEndpoints(uint8_t last_ep_num)
         
     Summary:
         Clears the control registers for the specified non-zero endpoints
@@ -549,7 +496,7 @@ bool USBSleepOnSuspend(void);
         None
         
     Parameters:
-        UINT8 last_ep_num - the last endpoint number to clear.  This
+        uint8_t last_ep_num - the last endpoint number to clear.  This
         number should include all endpoints used in any configuration.
         
     Return Values:
@@ -682,7 +629,7 @@ Function:
     void USBMaskAllUSBInterrupts(void)
 
 Summary:
-    This function saves the current USB1IE bit state, and then clears it
+    This function saves the current USBIE bit state, and then clears it
     to prevent any USB interrupt vectoring.
 
 PreCondition:
