@@ -49,12 +49,12 @@
          <string>class com.microchip.mcc.mcu16.systemManager.jtag.JTAG</string>
       </entry>
       <entry>
-         <string>INTERNAL OSCILLATOR</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.clk.Clock</string>
-      </entry>
-      <entry>
          <string>VendorDevice</string>
          <string>class com.microchip.mcc.modules.mcu16.deviceclass.VendorDevice.VendorDevice</string>
+      </entry>
+      <entry>
+         <string>INTERNAL OSCILLATOR</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.clk.Clock</string>
       </entry>
       <entry>
          <string>com.microchip.mcc.mcu16.Mcu16PeripheralLibraryLibraryModule</string>
@@ -62,8 +62,8 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu16.Mcu16PeripheralLibrary" version="1.170.0"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.USBDEVICELite.USBDEVICELite" version="1.27.0"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu16.Mcu16PeripheralLibrary" version="1.170.0"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.boardsupportlibrary.BoardSuppportLibrary" version="1.12.0"/>
    </usedLibraries>
    <tokenMap class="java.util.HashMap">
@@ -392,10 +392,6 @@
          <value>disabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="System Module" registerAlias="FOSCSEL" settingAlias="PLLMODE" alias="PLL8X"/>
-         <value>112</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="LATB" settingAlias="LATB14" alias="clear"/>
          <value>0</value>
       </entry>
@@ -564,10 +560,6 @@
          <value>9</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="System Module" registerAlias="FOSCSEL" settingAlias="PLLMODE" alias="PLL6X"/>
-         <value>104</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="CNPDB" settingAlias="CNPDB15"/>
          <value>disabled</value>
       </entry>
@@ -710,10 +702,6 @@
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="CNPDB" settingAlias="CNPDB14"/>
          <value>disabled</value>
-      </entry>
-      <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="System Module" registerAlias="FOSCSEL" settingAlias="PLLMODE" alias="PLL4X"/>
-         <value>96</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="FeatureRefClkOutoutEnable"/>
@@ -1321,7 +1309,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="USB" registerAlias="USBI" settingAlias="priority"/>
-         <value>1</value>
+         <value>7</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="INTERNAL OSCILLATOR" registerAlias="OSCCON" settingAlias="SOSCEN"/>
@@ -3881,7 +3869,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="USB" name="SerialNumberString"/>
-         <value></value>
+         <value/>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="IOCPUC" settingAlias="IOCPUC8"/>
@@ -11155,7 +11143,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\usb\usb_device_config.h</file>
-         <hash>f5d8aaf925567a4d69d9ce45108962a34418610ac592fe7bc79c5e9bc8f0a110</hash>
+         <hash>1d3696dbc0b2ef46f5bb7bcb5a36591a85cf1b9f70d3672fe4442699fbeeb66a</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\usb\usb_device_cdc.h</file>
@@ -11171,27 +11159,27 @@
       </entry>
       <entry>
          <file>mcc_generated_files\system.c</file>
-         <hash>c6254e57dceb0a6cc61c671dd05ccb150dcdb18fc7fdede900958aafd13a1fa2</hash>
+         <hash>dd54906562c4228041158ef74788b334cae3a859b620e0268851822c4d6fa9bf</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\clock.h</file>
          <hash>12ed1c40b3e943097ead632dc2b023faa7abddd0341a365cca424df0a79ff4cb</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\usb\usb_hal_pic24f.h</file>
-         <hash>c038b0489bd849d5cb4133203c96e0ee8424ebf57a0c0dedc9433073a9afca34</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\mcc.c</file>
          <hash>6bee3673918af25f49813e934cb8344ddb80e3a547765b05d42dce19bd75bc8e</hash>
       </entry>
       <entry>
+         <file>mcc_generated_files\usb\usb_hal_pic24f.h</file>
+         <hash>c038b0489bd849d5cb4133203c96e0ee8424ebf57a0c0dedc9433073a9afca34</hash>
+      </entry>
+      <entry>
          <file>mcc_generated_files\usb\usb_descriptors.c</file>
-         <hash>b1a9e213d9c8c6af0eedcb35ff4ec4ff77d9c5f90f6528869791a632f714c285</hash>
+         <hash>2f19023812727fc208cbfcf3790d9ab44cc7350f5ba754566c2b5352e8a90dfe</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>05d6b2f96aa7c0d6a00a24958a0a4f5d11556a8f1fc3bc58ac6413b51957ba61</hash>
+         <hash>f7f4b90bf7a6f43d5105e3455025c5e5ec64081a92c437665d9f1935508f23da</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\usb\usb.h</file>
@@ -11247,7 +11235,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\interrupt_manager.c</file>
-         <hash>3cb7ce18ce4ccd40d9374123402e3c3b29d4c3a7dcbf35bb3006176f04019046</hash>
+         <hash>cf7c41b7677f771387dfa8421813552cebb974bae3c6a515375533f21b595850</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\usb\usb_common.h</file>
