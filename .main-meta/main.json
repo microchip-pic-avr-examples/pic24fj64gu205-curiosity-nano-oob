@@ -35,11 +35,9 @@
          }
       },
       "peripherals":[
-         "GPIO",
          "USB"
       ],
       "keywords":[
-         "GPIO",
          "USB"
       ]
    }
