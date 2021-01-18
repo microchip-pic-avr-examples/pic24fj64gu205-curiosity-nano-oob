@@ -28,10 +28,38 @@ please contact mla_licensing@microchip.com
 //See other hal file for other microcontrollers.
 #if defined(__XC16__) || defined(__C30__)
 
+#if !defined(DEVICE_SPECIFIC_IEC_REGISTER_COUNT) && defined(IEC9)
+    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  9
+#endif
+
+#if !defined(DEVICE_SPECIFIC_IEC_REGISTER_COUNT) && defined(IEC8)
+    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  8
+#endif
+
+#if !defined(DEVICE_SPECIFIC_IEC_REGISTER_COUNT) && defined(IEC7)
+    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  7
+#endif
+
+#if !defined(DEVICE_SPECIFIC_IEC_REGISTER_COUNT) && defined(IEC6)
+    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  6
+#endif
+
+#if !defined(DEVICE_SPECIFIC_IEC_REGISTER_COUNT) && defined(IEC5)
+    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  5
+#endif
+
+#if !defined(DEVICE_SPECIFIC_IEC_REGISTER_COUNT) && defined(IEC4)
+    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  4
+#endif
+
+#if !defined(DEVICE_SPECIFIC_IEC_REGISTER_COUNT)
+    #warning "Unable to determine the number of interrupt registers on the specified device.  Please check the datasheet to see how many IECx register exist and correct this number.
+    #define DEVICE_SPECIFIC_IEC_REGISTER_COUNT  8
+#endif
+
 //Private prototypes - do not call directly from application code.
 static void USBSaveAndPrepareInterruptsForSleep(void);
 static void USBRestorePreviousInterruptSettings(void);
-
 
 //Private static variables needed for context saving operations.  Do not use/touch
 //outside of the context of the implemented APIs.
@@ -41,9 +69,6 @@ static unsigned int U1IE_save;
 static unsigned int U1OTGIE_save;
 static unsigned int USBIPLSave;
 static unsigned char USBIESave;
-
-
-
 
 /********************************************************************
 Function:
@@ -496,7 +521,7 @@ Remarks:
     Calling this function more than one (without calling USBRestorePreviousInterruptSettings()
     will result in a loss of state information.
   *******************************************************************/
-static void USBSaveAndPrepareInterruptsForSleep(void)
+static USBSaveAndPrepareInterruptsForSleep(void)
 {
     unsigned int i;
     volatile unsigned int* pRegister;
@@ -506,6 +531,7 @@ static void USBSaveAndPrepareInterruptsForSleep(void)
     CPUIPLSave = SR & 0x00E0;   //Save IPL bits only
     SRbits.IPL = 7;             //Set CPU to maximum, so as to disable lower priority interrupt vectoring.
 
+    
     //Now save and disable all other interrupt enable bits settings.  Note: This code
     //assumes all IECx registers are packed together little endian with no other registers intermingled
     //(make sure this is true if using a hypothetical device where this might not be the case).

@@ -13,11 +13,11 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.167.0
+        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.170.0
         Device            :  PIC24FJ64GU205
     The generated drivers are tested against the following:
-        Compiler          :  XC16 v1.50
-        MPLAB             :  MPLAB X v5.35
+        Compiler          :  XC16 v1.61
+        MPLAB             :  MPLAB X v5.45
 */
 
 /*
@@ -52,10 +52,10 @@
 #include <stdbool.h>
 
 #ifndef _XTAL_FREQ
-#define _XTAL_FREQ  4000000UL
+#define _XTAL_FREQ  32000000UL
 #endif
 
-#define CLOCK_SystemFrequencyGet()        (4000000UL)
+#define CLOCK_SystemFrequencyGet()        (32000000UL)
 
 #define CLOCK_PeripheralFrequencyGet()    (CLOCK_SystemFrequencyGet() / 2)
 

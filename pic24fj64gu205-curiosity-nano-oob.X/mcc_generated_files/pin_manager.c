@@ -15,11 +15,11 @@
   @Description:
     This source file provides implementations for PIN MANAGER.
     Generation Information :
-        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.167.0
+        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.170.0
         Device            :  PIC24FJ64GU205
     The generated drivers are tested against the following:
-        Compiler          :  XC16 v1.50
-        MPLAB 	          :  MPLAB X v5.35
+        Compiler          :  XC16 v1.61
+        MPLAB 	          :  MPLAB X v5.45
 */
 
 /*
@@ -68,10 +68,25 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the GPIO Direction SFR(s)
      ***************************************************************************/
-    TRISA = 0xF6FF;
-    TRISB = 0xFFFF;
-    TRISC = 0x701E;
+    TRISA = 0x7F87;
+    TRISB = 0xEFFF;
+    TRISC = 0x03FF;
 
+    /****************************************************************************
+     * Setting the Weak Pull Up and Weak Pull Down SFR(s)
+     ***************************************************************************/
+    CNPDA = 0x0000;
+    CNPDB = 0x0000;
+    CNPDC = 0x0000;
+    CNPUA = 0x0000;
+    CNPUB = 0x0000;
+    CNPUC = 0x0000;
+    IOCPDA = 0x0000;
+    IOCPDB = 0x0000;
+    IOCPDC = 0x0000;
+    IOCPUA = 0x0000;
+    IOCPUB = 0x0000;
+    IOCPUC = 0x0000;
 
     /****************************************************************************
      * Setting the Open Drain SFR(s)
@@ -79,7 +94,12 @@ void PIN_MANAGER_Initialize (void)
     ODCA = 0x0000;
     ODCB = 0x0000;
     ODCC = 0x0000;
-    
-    IOCPUAbits.CNPUA12 = 1;
+
+    /****************************************************************************
+     * Setting the Analog/Digital Configuration SFR(s)
+     ***************************************************************************/
+    ANSA = 0x000C;
+    ANSB = 0xE20F;
+    ANSC = 0x000F;
 }
 

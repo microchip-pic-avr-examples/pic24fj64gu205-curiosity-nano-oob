@@ -13,11 +13,11 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.167.0
+        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.170.0
         Device            :  PIC24FJ64GU205
     The generated drivers are tested against the following:
-        Compiler          :  XC16 v1.50
-        MPLAB             :  MPLAB X v5.35
+        Compiler          :  XC16 v1.61
+        MPLAB             :  MPLAB X v5.45
 */
 
 /*
@@ -48,23 +48,34 @@
 
 void CLOCK_Initialize(void)
 {
-    // CPDIV 1:1; RCDIV FRC/2; DOZE 1:8; DOZEN disabled; ROI disabled; 
-    CLKDIV = 0x3100;
-    // TUN Center frequency; 
-    OSCTUN = 0x00;
-    // ADC1MD enabled; T3MD enabled; T4MD enabled; T1MD enabled; U2MD enabled; T2MD enabled; U1MD enabled; SPI2MD enabled; SPI1MD enabled; T5MD enabled; I2C1MD enabled; 
+    // CPDIV 1:1; PLLEN disabled; DOZE 1:8; RCDIV FRC; DOZEN disabled; ROI disabled; 
+    CLKDIV = 0x3000;
+    // STOR disabled; STORPOL Interrupt when STOR is 1; STSIDL disabled; STLPOL Interrupt when STLOCK is 1; STLOCK disabled; STSRC USB; STEN enabled; TUN Center frequency; 
+    OSCTUN = 0x9000;
+    // ROEN disabled; ROSWEN disabled; ROSEL FOSC; ROOUT disabled; ROSIDL disabled; ROSLP disabled; 
+    REFOCONL = 0x00;
+    // RODIV 0; 
+    REFOCONH = 0x00;
+    // DIV 0; 
+    OSCDIV = 0x00;
+    // TRIM 0; 
+    OSCFDIV = 0x00;
+    // AD1MD enabled; T3MD enabled; T1MD enabled; U2MD enabled; T2MD enabled; U1MD enabled; SPI2MD enabled; SPI1MD enabled; I2C1MD enabled; 
     PMD1 = 0x00;
-    // OC5MD enabled; OC6MD enabled; OC7MD enabled; OC8MD enabled; OC1MD enabled; IC2MD enabled; OC2MD enabled; IC1MD enabled; OC3MD enabled; OC4MD enabled; IC6MD enabled; IC7MD enabled; IC5MD enabled; IC8MD enabled; IC4MD enabled; IC3MD enabled; 
-    PMD2 = 0x00;
-    // I2C3MD enabled; PMPMD enabled; U3MD enabled; RTCCMD enabled; CMPMD enabled; CRCMD enabled; I2C2MD enabled; 
+    // RTCCMD enabled; CMPMD enabled; CRCMD enabled; I2C2MD enabled; 
     PMD3 = 0x00;
-    // U4MD enabled; UPWMMD enabled; USB1MD enabled; CTMUMD enabled; REFOMD enabled; LVDMD enabled; 
+    // USBMD enabled; REFOMD enabled; HLVDMD enabled; 
     PMD4 = 0x00;
-    // IC9MD enabled; OC9MD enabled; 
+    // CCP2MD enabled; CCP1MD enabled; CCP4MD enabled; CCP3MD enabled; CCP5MD enabled; 
     PMD5 = 0x00;
-    // SPI3MD enabled; 
-    PMD6 = 0x00;
-    // NOSC FRCDIV; SOSCEN disabled; POSCEN disabled; OSWEN Switch is Complete; 
-    __builtin_write_OSCCONH((uint8_t) (0x07));
-    __builtin_write_OSCCONL((uint8_t) (0x00));
+    // DMA0MD enabled; 
+    PMD7 = 0x00;
+    // DMTMD enabled; CLC3MD enabled; CLC4MD enabled; CLC1MD enabled; CLC2MD enabled; 
+    PMD8 = 0x00;
+    // CF no clock failure; NOSC FRCPLL; SOSCEN enabled; POSCEN disabled; CLKLOCK unlocked; OSWEN Switch is Complete; IOLOCK not-active; 
+    __builtin_write_OSCCONH((uint8_t) (0x01));
+    __builtin_write_OSCCONL((uint8_t) (0x03));
+    // Wait for Clock switch to occur
+    while (OSCCONbits.OSWEN != 0);
+    while (OSCCONbits.LOCK != 1);
 }

@@ -1,6 +1,6 @@
 
 
-
+ 
 /*******************************************************************************
 Copyright 2016 Microchip Technology Inc. (www.microchip.com)
 
@@ -170,8 +170,7 @@ please contact mla_licensing@microchip.com
 //#define USB_CDC_SUPPORT_ABSTRACT_CONTROL_MANAGEMENT_CAPABILITIES_D2 //Send_Break command
 
 /** DEFINITIONS ****************************************************/
-#define USE_USB_BUS_SENSE_IO
-#define USB_BUS_SENSE PORTBbits.RB6
+
 /** DEFINITIONS ****************************************************/
 
 #endif //USBCFG_H

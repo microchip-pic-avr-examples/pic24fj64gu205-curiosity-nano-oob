@@ -453,11 +453,19 @@ bool USBCDCEventHandler(USB_EVENT event, void *pdata, uint16_t size)
     It does not wait for data if there is no data available. Instead it
     returns '0' to notify the caller that there is no data available.
 
+    If a call is made and there is still data remaining in the buffer unread
+    when this function returns, it will be flushed and more data will be 
+    received from the bus.
+
   Description:
     getsUSBUSART copies a string of BYTEs received through USB CDC Bulk OUT
     endpoint to a user's specified location. It is a non-blocking function.
     It does not wait for data if there is no data available. Instead it
     returns '0' to notify the caller that there is no data available.
+
+    If a call is made and there is still data remaining in the buffer unread
+    when this function returns, it will be flushed and more data will be 
+    received from the bus.
     
     Typical Usage:
     <code>
@@ -473,13 +481,23 @@ bool USBCDCEventHandler(USB_EVENT event, void *pdata, uint16_t size)
         }
     </code>
   Conditions:
-    Value of input argument 'len' should be smaller than the maximum
+    Value of input argument 'len' should be smaller or equal to the maximum
     endpoint size responsible for receiving bulk data from USB host for CDC
     class. Input argument 'buffer' should point to a buffer area that is
     bigger or equal to the size specified by 'len'.
+
+    If a call is made and there is still data remaining in the buffer unread
+    when this function returns, it will be flushed and more data will be 
+    received from the bus.
+
   Input:
     buffer -  Pointer to where received BYTEs are to be stored
     len -     The number of BYTEs expected.
+  Output:
+    uint8_t -    Returns a byte indicating the total number of bytes that were actually
+              received and copied into the specified buffer.  The returned value
+              can be anything from 0 up to the len input value.  A return value of 0
+              indicates that no new CDC bulk OUT endpoint data was available.
                                                                                    
   **********************************************************************************/
 uint8_t getsUSBUSART(uint8_t *buffer, uint8_t len)
